@@ -58,6 +58,18 @@ interface StatCard {
   trend: 'up' | 'down';
 }
 
+interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  totalSpent: number;
+  ordersCount: number;
+  lastPurchase: string;
+  status: 'new' | 'active' | 'vip' | 'inactive';
+  registrationDate: string;
+}
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
@@ -92,6 +104,17 @@ const Index = () => {
     { id: 'PT-004', name: 'Новый Партнёр', type: 'Дилер', revenue: 0, orders: 0, status: 'pending' },
   ];
 
+  const customers: Customer[] = [
+    { id: 'CL-001', name: 'Иван Петров', email: 'ivan.petrov@mail.ru', phone: '+7 (999) 123-45-67', totalSpent: 8500000, ordersCount: 12, lastPurchase: '15.12.2024', status: 'vip', registrationDate: '15.01.2023' },
+    { id: 'CL-002', name: 'Мария Сидорова', email: 'maria.s@gmail.com', phone: '+7 (999) 234-56-78', totalSpent: 3200000, ordersCount: 5, lastPurchase: '18.12.2024', status: 'active', registrationDate: '22.03.2023' },
+    { id: 'CL-003', name: 'Алексей Козлов', email: 'alexey.k@yandex.ru', phone: '+7 (999) 345-67-89', totalSpent: 156000, ordersCount: 8, lastPurchase: '17.12.2024', status: 'active', registrationDate: '08.05.2024' },
+    { id: 'CL-004', name: 'Ольга Новикова', email: 'olga.nova@mail.ru', phone: '+7 (999) 456-78-90', totalSpent: 5800000, ordersCount: 9, lastPurchase: '16.12.2024', status: 'vip', registrationDate: '11.02.2023' },
+    { id: 'CL-005', name: 'Дмитрий Волков', email: 'dmitry.v@inbox.ru', phone: '+7 (999) 567-89-01', totalSpent: 1200000, ordersCount: 3, lastPurchase: '14.12.2024', status: 'active', registrationDate: '30.07.2024' },
+    { id: 'CL-006', name: 'Анна Морозова', email: 'anna.m@gmail.com', phone: '+7 (999) 678-90-12', totalSpent: 42000, ordersCount: 1, lastPurchase: '18.12.2024', status: 'new', registrationDate: '18.12.2024' },
+    { id: 'CL-007', name: 'Сергей Лебедев', email: 'sergey.leb@mail.ru', phone: '+7 (999) 789-01-23', totalSpent: 380000, ordersCount: 2, lastPurchase: '10.11.2024', status: 'inactive', registrationDate: '15.03.2024' },
+    { id: 'CL-008', name: 'Елена Кузнецова', email: 'elena.k@yandex.ru', phone: '+7 (999) 890-12-34', totalSpent: 12500000, ordersCount: 18, lastPurchase: '17.12.2024', status: 'vip', registrationDate: '05.12.2022' },
+  ];
+
   const getStatusBadge = (status: OrderStatus) => {
     const variants: Record<OrderStatus, { label: string; className: string }> = {
       new: { label: 'Новый', className: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
@@ -117,6 +140,16 @@ const Index = () => {
       active: { label: 'Активен', className: 'bg-green-500/20 text-green-400 border-green-500/30' },
       pending: { label: 'На проверке', className: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
       blocked: { label: 'Заблокирован', className: 'bg-red-500/20 text-red-400 border-red-500/30' },
+    };
+    return <Badge className={variants[status].className}>{variants[status].label}</Badge>;
+  };
+
+  const getCustomerStatusBadge = (status: Customer['status']) => {
+    const variants = {
+      new: { label: 'Новый', className: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
+      active: { label: 'Активный', className: 'bg-green-500/20 text-green-400 border-green-500/30' },
+      vip: { label: 'VIP', className: 'bg-purple-500/20 text-purple-400 border-purple-500/30' },
+      inactive: { label: 'Неактивный', className: 'bg-gray-500/20 text-gray-400 border-gray-500/30' },
     };
     return <Badge className={variants[status].className}>{variants[status].label}</Badge>;
   };
@@ -991,12 +1024,262 @@ const Index = () => {
           )}
 
           {activeTab === 'customers' && (
-            <div className="animate-fade-in">
-              <Card className="p-12 bg-card border-border text-center">
-                <Icon name="Construction" size={64} className="mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-2xl font-bold text-foreground mb-2">Раздел в разработке</h3>
-                <p className="text-muted-foreground">Этот функционал будет доступен в следующей версии</p>
+            <div className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <Card className="p-6 bg-gradient-to-br from-blue-500/20 to-blue-600/10 border-blue-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-blue-200 mb-1">Новые клиенты</p>
+                      <h3 className="text-3xl font-bold text-blue-100">
+                        {customers.filter(c => c.status === 'new').length}
+                      </h3>
+                      <p className="text-xs text-blue-300 mt-2">За последний месяц</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-blue-500/30 flex items-center justify-center">
+                      <Icon name="UserPlus" size={24} className="text-blue-300" />
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-gradient-to-br from-green-500/20 to-green-600/10 border-green-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-green-200 mb-1">Активные клиенты</p>
+                      <h3 className="text-3xl font-bold text-green-100">
+                        {customers.filter(c => c.status === 'active').length}
+                      </h3>
+                      <p className="text-xs text-green-300 mt-2">Совершают покупки</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-green-500/30 flex items-center justify-center">
+                      <Icon name="UserCheck" size={24} className="text-green-300" />
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-gradient-to-br from-purple-500/20 to-purple-600/10 border-purple-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-purple-200 mb-1">VIP клиенты</p>
+                      <h3 className="text-3xl font-bold text-purple-100">
+                        {customers.filter(c => c.status === 'vip').length}
+                      </h3>
+                      <p className="text-xs text-purple-300 mt-2">Более 5М ₽</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-purple-500/30 flex items-center justify-center">
+                      <Icon name="Crown" size={24} className="text-purple-300" />
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-gradient-to-br from-orange-500/20 to-orange-600/10 border-orange-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-orange-200 mb-1">Всего клиентов</p>
+                      <h3 className="text-3xl font-bold text-orange-100">{customers.length}</h3>
+                      <p className="text-xs text-orange-300 mt-2">В базе данных</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-orange-500/30 flex items-center justify-center">
+                      <Icon name="Users" size={24} className="text-orange-300" />
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-48 bg-card border-border">
+                    <SelectValue placeholder="Статус" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Все клиенты</SelectItem>
+                    <SelectItem value="new">Новые</SelectItem>
+                    <SelectItem value="active">Активные</SelectItem>
+                    <SelectItem value="vip">VIP</SelectItem>
+                    <SelectItem value="inactive">Неактивные</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button>
+                  <Icon name="Plus" size={18} className="mr-2" />
+                  Добавить клиента
+                </Button>
+              </div>
+
+              <Card className="bg-card border-border">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-border hover:bg-transparent">
+                      <TableHead className="text-muted-foreground">ID</TableHead>
+                      <TableHead className="text-muted-foreground">Клиент</TableHead>
+                      <TableHead className="text-muted-foreground">Контакты</TableHead>
+                      <TableHead className="text-muted-foreground">Потрачено</TableHead>
+                      <TableHead className="text-muted-foreground">Заказов</TableHead>
+                      <TableHead className="text-muted-foreground">Последняя покупка</TableHead>
+                      <TableHead className="text-muted-foreground">Статус</TableHead>
+                      <TableHead className="text-muted-foreground">Действия</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {customers.map((customer) => (
+                      <TableRow key={customer.id} className="border-border">
+                        <TableCell className="font-medium text-foreground">{customer.id}</TableCell>
+                        <TableCell>
+                          <div>
+                            <p className="font-medium text-foreground">{customer.name}</p>
+                            <p className="text-xs text-muted-foreground">Регистрация: {customer.registrationDate}</p>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <Icon name="Mail" size={14} className="text-muted-foreground" />
+                              <span className="text-xs text-foreground">{customer.email}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Icon name="Phone" size={14} className="text-muted-foreground" />
+                              <span className="text-xs text-foreground">{customer.phone}</span>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-semibold text-foreground">
+                          {customer.totalSpent >= 1000000 
+                            ? `${(customer.totalSpent / 1000000).toFixed(1)}М ₽`
+                            : `${(customer.totalSpent / 1000).toFixed(0)}К ₽`
+                          }
+                        </TableCell>
+                        <TableCell className="text-foreground">{customer.ordersCount}</TableCell>
+                        <TableCell className="text-muted-foreground">{customer.lastPurchase}</TableCell>
+                        <TableCell>{getCustomerStatusBadge(customer.status)}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Button variant="ghost" size="icon">
+                              <Icon name="Eye" size={18} />
+                            </Button>
+                            <Button variant="ghost" size="icon">
+                              <Icon name="MessageCircle" size={18} />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </Card>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <Icon name="TrendingUp" size={20} className="text-primary" />
+                    Топ клиенты по выручке
+                  </h3>
+                  <div className="space-y-3">
+                    {customers
+                      .sort((a, b) => b.totalSpent - a.totalSpent)
+                      .slice(0, 5)
+                      .map((customer, idx) => (
+                        <div key={customer.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover-scale">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                              {idx + 1}
+                            </div>
+                            <div>
+                              <p className="font-medium text-foreground">{customer.name}</p>
+                              <p className="text-xs text-muted-foreground">{customer.ordersCount} заказов</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-bold text-foreground">
+                              {customer.totalSpent >= 1000000 
+                                ? `${(customer.totalSpent / 1000000).toFixed(1)}М ₽`
+                                : `${(customer.totalSpent / 1000).toFixed(0)}К ₽`
+                              }
+                            </p>
+                            {getCustomerStatusBadge(customer.status)}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <Icon name="Calendar" size={20} className="text-primary" />
+                    Регистрации за последние 6 месяцев
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      { month: 'Июль', count: 12, growth: '+8%' },
+                      { month: 'Август', count: 15, growth: '+25%' },
+                      { month: 'Сентябрь', count: 18, growth: '+20%' },
+                      { month: 'Октябрь', count: 22, growth: '+22%' },
+                      { month: 'Ноябрь', count: 28, growth: '+27%' },
+                      { month: 'Декабрь', count: 35, growth: '+25%' },
+                    ].map((item, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">{item.month}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-foreground">{item.count}</span>
+                            <span className="text-xs text-green-400">{item.growth}</span>
+                          </div>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-gradient-to-r from-primary to-primary/50 rounded-full transition-all duration-500"
+                            style={{ width: `${(item.count / 35) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <Card className="p-6 bg-card border-border hover-scale">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                      <Icon name="DollarSign" size={20} className="text-blue-400" />
+                    </div>
+                    <h3 className="font-semibold text-foreground">Средний чек</h3>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-2">₽186К</p>
+                  <p className="text-sm text-muted-foreground">На одного клиента</p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <Icon name="TrendingUp" size={16} className="text-green-400" />
+                    <span className="text-sm text-green-400 font-medium">+12% к прошлому месяцу</span>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border hover-scale">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                      <Icon name="Repeat" size={20} className="text-purple-400" />
+                    </div>
+                    <h3 className="font-semibold text-foreground">LTV (пожизненная ценность)</h3>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-2">₽3.2М</p>
+                  <p className="text-sm text-muted-foreground">Средний доход с клиента</p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <Icon name="TrendingUp" size={16} className="text-green-400" />
+                    <span className="text-sm text-green-400 font-medium">+18% к прошлому году</span>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border hover-scale">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                      <Icon name="Target" size={20} className="text-orange-400" />
+                    </div>
+                    <h3 className="font-semibold text-foreground">Retention Rate</h3>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-2">68%</p>
+                  <p className="text-sm text-muted-foreground">Клиентов возвращаются</p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <Icon name="TrendingUp" size={16} className="text-green-400" />
+                    <span className="text-sm text-green-400 font-medium">+5% к прошлому месяцу</span>
+                  </div>
+                </Card>
+              </div>
             </div>
           )}
         </div>
