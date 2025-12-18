@@ -440,7 +440,557 @@ const Index = () => {
             </div>
           )}
 
-          {(activeTab === 'customers' || activeTab === 'finance' || activeTab === 'analytics' || activeTab === 'settings') && (
+          {activeTab === 'finance' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <Card className="p-6 bg-gradient-to-br from-green-500/20 to-green-600/10 border-green-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-green-200 mb-1">Общий доход</p>
+                      <h3 className="text-3xl font-bold text-green-100">₽42.8М</h3>
+                      <p className="text-xs text-green-300 mt-2">За текущий месяц</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-green-500/30 flex items-center justify-center">
+                      <Icon name="TrendingUp" size={24} className="text-green-300" />
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-gradient-to-br from-red-500/20 to-red-600/10 border-red-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-red-200 mb-1">Расходы</p>
+                      <h3 className="text-3xl font-bold text-red-100">₽18.2М</h3>
+                      <p className="text-xs text-red-300 mt-2">За текущий месяц</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-red-500/30 flex items-center justify-center">
+                      <Icon name="TrendingDown" size={24} className="text-red-300" />
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-gradient-to-br from-blue-500/20 to-blue-600/10 border-blue-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-blue-200 mb-1">Чистая прибыль</p>
+                      <h3 className="text-3xl font-bold text-blue-100">₽24.6М</h3>
+                      <p className="text-xs text-blue-300 mt-2">+32% к прошлому</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-blue-500/30 flex items-center justify-center">
+                      <Icon name="DollarSign" size={24} className="text-blue-300" />
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-gradient-to-br from-purple-500/20 to-purple-600/10 border-purple-500/30 hover-scale">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm text-purple-200 mb-1">Средний чек</p>
+                      <h3 className="text-3xl font-bold text-purple-100">₽186К</h3>
+                      <p className="text-xs text-purple-300 mt-2">+8% к прошлому</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-lg bg-purple-500/30 flex items-center justify-center">
+                      <Icon name="Receipt" size={24} className="text-purple-300" />
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <Icon name="BarChart3" size={20} className="text-primary" />
+                    Динамика дохода за неделю
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      { day: 'Понедельник', amount: 5200000, percent: 85 },
+                      { day: 'Вторник', amount: 6800000, percent: 100 },
+                      { day: 'Среда', amount: 4500000, percent: 70 },
+                      { day: 'Четверг', amount: 7200000, percent: 95 },
+                      { day: 'Пятница', amount: 8100000, percent: 100 },
+                      { day: 'Суббота', amount: 6200000, percent: 80 },
+                      { day: 'Воскресенье', amount: 4800000, percent: 65 },
+                    ].map((item, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">{item.day}</span>
+                          <span className="font-semibold text-foreground">{(item.amount / 1000000).toFixed(1)}М ₽</span>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full transition-all duration-500"
+                            style={{ width: `${item.percent}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <Icon name="Users" size={20} className="text-primary" />
+                    Топ клиенты по выручке
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      { name: 'ООО "Авто Альянс"', amount: 8500000, orders: 23 },
+                      { name: 'ИП Транс-Авто', amount: 6200000, orders: 18 },
+                      { name: 'МегаМоторс ООО', amount: 5800000, orders: 15 },
+                      { name: 'ТК "Автолюкс"', amount: 4300000, orders: 12 },
+                      { name: 'ООО "Драйв Холдинг"', amount: 3900000, orders: 10 },
+                    ].map((client, idx) => (
+                      <div key={idx} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover-scale">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                            {idx + 1}
+                          </div>
+                          <div>
+                            <p className="font-medium text-foreground">{client.name}</p>
+                            <p className="text-xs text-muted-foreground">{client.orders} заказов</p>
+                          </div>
+                        </div>
+                        <p className="font-bold text-foreground">{(client.amount / 1000000).toFixed(1)}М ₽</p>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+
+              <Card className="p-6 bg-card border-border">
+                <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                  <Icon name="ArrowLeftRight" size={20} className="text-primary" />
+                  Последние транзакции
+                </h3>
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-border hover:bg-transparent">
+                      <TableHead className="text-muted-foreground">Дата</TableHead>
+                      <TableHead className="text-muted-foreground">Описание</TableHead>
+                      <TableHead className="text-muted-foreground">Категория</TableHead>
+                      <TableHead className="text-muted-foreground">Тип</TableHead>
+                      <TableHead className="text-muted-foreground text-right">Сумма</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {[
+                      { date: '18.12.2024 14:23', desc: 'Продажа Toyota Camry', category: 'Продажи', type: 'income', amount: 2850000 },
+                      { date: '18.12.2024 11:15', desc: 'Закупка запчастей', category: 'Снабжение', type: 'expense', amount: -185000 },
+                      { date: '17.12.2024 16:42', desc: 'Страховка ОСАГО', category: 'Продажи', type: 'income', amount: 18500 },
+                      { date: '17.12.2024 09:30', desc: 'Аренда склада', category: 'Операционные', type: 'expense', amount: -250000 },
+                      { date: '16.12.2024 13:55', desc: 'Продажа Mazda CX-5', category: 'Продажи', type: 'income', amount: 3200000 },
+                    ].map((tx, idx) => (
+                      <TableRow key={idx} className="border-border">
+                        <TableCell className="text-muted-foreground">{tx.date}</TableCell>
+                        <TableCell className="font-medium text-foreground">{tx.desc}</TableCell>
+                        <TableCell>
+                          <Badge className="bg-muted text-foreground border-border">{tx.category}</Badge>
+                        </TableCell>
+                        <TableCell>
+                          {tx.type === 'income' ? (
+                            <Badge className="bg-green-500/20 text-green-400 border-green-500/30">Приход</Badge>
+                          ) : (
+                            <Badge className="bg-red-500/20 text-red-400 border-red-500/30">Расход</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className={`text-right font-bold ${tx.type === 'income' ? 'text-green-400' : 'text-red-400'}`}>
+                          {tx.amount > 0 ? '+' : ''}{tx.amount.toLocaleString('ru-RU')} ₽
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === 'analytics' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <Icon name="PieChart" size={20} className="text-primary" />
+                    Продажи по категориям
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      { name: 'Автомобили', value: 68, amount: 28600000, color: 'from-purple-500 to-purple-600' },
+                      { name: 'Запчасти', value: 22, amount: 9240000, color: 'from-orange-500 to-orange-600' },
+                      { name: 'Страхование', value: 10, amount: 4200000, color: 'from-blue-500 to-blue-600' },
+                    ].map((cat, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${cat.color}`} />
+                            <span className="text-sm font-medium text-foreground">{cat.name}</span>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-bold text-foreground">{cat.value}%</p>
+                            <p className="text-xs text-muted-foreground">{(cat.amount / 1000000).toFixed(1)}М ₽</p>
+                          </div>
+                        </div>
+                        <div className="h-3 bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full bg-gradient-to-r ${cat.color} rounded-full transition-all duration-500`}
+                            style={{ width: `${cat.value}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 p-4 bg-muted/30 rounded-lg">
+                    <p className="text-sm text-muted-foreground mb-1">Общая выручка</p>
+                    <p className="text-2xl font-bold text-foreground">₽42.04М</p>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                    <Icon name="TrendingUp" size={20} className="text-primary" />
+                    Воронка продаж
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      { stage: 'Просмотры сайта', count: 8420, percent: 100, color: 'bg-blue-500' },
+                      { stage: 'Заявки', count: 1684, percent: 20, color: 'bg-purple-500' },
+                      { stage: 'Консультации', count: 842, percent: 10, color: 'bg-orange-500' },
+                      { stage: 'Коммерческие предложения', count: 337, percent: 4, color: 'bg-yellow-500' },
+                      { stage: 'Сделки', count: 168, percent: 2, color: 'bg-green-500' },
+                    ].map((stage, idx) => (
+                      <div key={idx} className="relative">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-foreground">{stage.stage}</span>
+                          <span className="text-sm text-muted-foreground">{stage.count} ({stage.percent}%)</span>
+                        </div>
+                        <div 
+                          className={`h-10 ${stage.color} rounded-lg flex items-center justify-end px-4 transition-all duration-500 hover-scale`}
+                          style={{ width: `${stage.percent}%`, minWidth: '120px' }}
+                        >
+                          <span className="text-white font-bold text-sm">{stage.count}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                    <p className="text-sm text-green-300 mb-1">Конверсия</p>
+                    <p className="text-2xl font-bold text-green-200">2.0%</p>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <Card className="p-6 bg-card border-border hover-scale">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                      <Icon name="Clock" size={20} className="text-blue-400" />
+                    </div>
+                    <h3 className="font-semibold text-foreground">Среднее время сделки</h3>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-2">12.5 дней</p>
+                  <p className="text-sm text-muted-foreground">От заявки до покупки</p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <Icon name="TrendingDown" size={16} className="text-green-400" />
+                    <span className="text-sm text-green-400 font-medium">-2 дня к прошлому месяцу</span>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border hover-scale">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                      <Icon name="Percent" size={20} className="text-purple-400" />
+                    </div>
+                    <h3 className="font-semibold text-foreground">Повторные покупки</h3>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-2">18%</p>
+                  <p className="text-sm text-muted-foreground">Клиентов вернулись</p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <Icon name="TrendingUp" size={16} className="text-green-400" />
+                    <span className="text-sm text-green-400 font-medium">+5% к прошлому месяцу</span>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border hover-scale">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                      <Icon name="Star" size={20} className="text-orange-400" />
+                    </div>
+                    <h3 className="font-semibold text-foreground">Средний рейтинг</h3>
+                  </div>
+                  <p className="text-3xl font-bold text-foreground mb-2">4.8 / 5.0</p>
+                  <p className="text-sm text-muted-foreground">На основе 342 отзывов</p>
+                  <div className="mt-4 flex items-center gap-1">
+                    {[1,2,3,4,5].map((star) => (
+                      <Icon key={star} name="Star" size={16} className={star <= 4 ? "text-orange-400 fill-orange-400" : "text-orange-400"} />
+                    ))}
+                  </div>
+                </Card>
+              </div>
+
+              <Card className="p-6 bg-card border-border">
+                <h3 className="text-lg font-semibold mb-4 text-foreground flex items-center gap-2">
+                  <Icon name="Activity" size={20} className="text-primary" />
+                  Тренды заказов по дням недели
+                </h3>
+                <div className="grid grid-cols-7 gap-2">
+                  {[
+                    { day: 'Пн', orders: 18, height: 60 },
+                    { day: 'Вт', orders: 24, height: 80 },
+                    { day: 'Ср', orders: 15, height: 50 },
+                    { day: 'Чт', orders: 28, height: 95 },
+                    { day: 'Пт', orders: 32, height: 100 },
+                    { day: 'Сб', orders: 22, height: 70 },
+                    { day: 'Вс', orders: 12, height: 40 },
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex flex-col items-center gap-2">
+                      <div className="w-full h-32 bg-muted/30 rounded-lg flex items-end justify-center p-2 relative group hover-scale">
+                        <div 
+                          className="w-full bg-gradient-to-t from-primary to-primary/50 rounded transition-all duration-500"
+                          style={{ height: `${item.height}%` }}
+                        />
+                        <div className="absolute top-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <span className="text-xs font-bold text-foreground bg-background/80 px-2 py-1 rounded">
+                            {item.orders}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-sm font-medium text-muted-foreground">{item.day}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === 'settings' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <Card className="p-6 bg-card border-border col-span-2">
+                  <h3 className="text-lg font-semibold mb-6 text-foreground flex items-center gap-2">
+                    <Icon name="User" size={20} className="text-primary" />
+                    Профиль администратора
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary/50 flex items-center justify-center">
+                        <Icon name="User" size={32} className="text-primary-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <Button variant="outline" size="sm">
+                          <Icon name="Upload" size={16} className="mr-2" />
+                          Загрузить фото
+                        </Button>
+                        <p className="text-xs text-muted-foreground mt-2">JPG, PNG до 2MB</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-foreground">Имя</label>
+                        <Input defaultValue="Александр" className="bg-muted/30 border-border" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-foreground">Фамилия</label>
+                        <Input defaultValue="Иванов" className="bg-muted/30 border-border" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground">Email</label>
+                      <Input defaultValue="admin@automarket.ru" type="email" className="bg-muted/30 border-border" />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground">Телефон</label>
+                      <Input defaultValue="+7 (999) 123-45-67" className="bg-muted/30 border-border" />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground">Должность</label>
+                      <Select defaultValue="admin">
+                        <SelectTrigger className="bg-muted/30 border-border">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="admin">Главный администратор</SelectItem>
+                          <SelectItem value="manager">Менеджер</SelectItem>
+                          <SelectItem value="analyst">Аналитик</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex gap-3 pt-4">
+                      <Button>
+                        <Icon name="Save" size={16} className="mr-2" />
+                        Сохранить изменения
+                      </Button>
+                      <Button variant="outline">Отменить</Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-6 text-foreground flex items-center gap-2">
+                    <Icon name="Shield" size={20} className="text-primary" />
+                    Безопасность
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Icon name="CheckCircle" size={18} className="text-green-400" />
+                        <p className="text-sm font-medium text-green-200">Двухфакторная аутентификация</p>
+                      </div>
+                      <p className="text-xs text-green-300">Включена</p>
+                    </div>
+
+                    <Button variant="outline" className="w-full justify-start">
+                      <Icon name="Key" size={16} className="mr-2" />
+                      Сменить пароль
+                    </Button>
+
+                    <Button variant="outline" className="w-full justify-start">
+                      <Icon name="Smartphone" size={16} className="mr-2" />
+                      Активные сессии (3)
+                    </Button>
+
+                    <Button variant="outline" className="w-full justify-start text-red-400 border-red-500/30 hover:bg-red-500/10">
+                      <Icon name="LogOut" size={16} className="mr-2" />
+                      Выйти со всех устройств
+                    </Button>
+                  </div>
+
+                  <div className="mt-6 p-4 bg-muted/30 rounded-lg">
+                    <p className="text-xs text-muted-foreground mb-1">Последний вход</p>
+                    <p className="text-sm font-medium text-foreground">18.12.2024, 09:15</p>
+                    <p className="text-xs text-muted-foreground mt-1">IP: 192.168.1.105</p>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-6 text-foreground flex items-center gap-2">
+                    <Icon name="Bell" size={20} className="text-primary" />
+                    Уведомления
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      { label: 'Email уведомления о новых заказах', checked: true },
+                      { label: 'Push-уведомления о критичных событиях', checked: true },
+                      { label: 'Еженедельный отчёт по продажам', checked: true },
+                      { label: 'Уведомления об отзывах клиентов', checked: false },
+                      { label: 'SMS при крупных сделках (>1М ₽)', checked: true },
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover-scale">
+                        <label className="text-sm text-foreground cursor-pointer flex-1">{item.label}</label>
+                        <div className={`w-11 h-6 rounded-full transition-colors cursor-pointer ${item.checked ? 'bg-primary' : 'bg-muted'}`}>
+                          <div className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${item.checked ? 'translate-x-5' : 'translate-x-0.5'} translate-y-0.5`} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold mb-6 text-foreground flex items-center gap-2">
+                    <Icon name="Plug" size={20} className="text-primary" />
+                    Интеграции
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      { name: '1С:Предприятие', status: 'connected', icon: 'Database' },
+                      { name: 'Telegram Bot', status: 'connected', icon: 'MessageCircle' },
+                      { name: 'Яндекс.Метрика', status: 'connected', icon: 'BarChart' },
+                      { name: 'WhatsApp Business', status: 'disconnected', icon: 'MessageSquare' },
+                      { name: 'Bitrix24 CRM', status: 'disconnected', icon: 'Users' },
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-center justify-between p-4 bg-muted/30 rounded-lg hover-scale">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${item.status === 'connected' ? 'bg-green-500/20' : 'bg-muted'}`}>
+                            <Icon name={item.icon} size={20} className={item.status === 'connected' ? 'text-green-400' : 'text-muted-foreground'} />
+                          </div>
+                          <div>
+                            <p className="font-medium text-foreground">{item.name}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {item.status === 'connected' ? 'Подключено' : 'Не подключено'}
+                            </p>
+                          </div>
+                        </div>
+                        <Button variant="outline" size="sm">
+                          {item.status === 'connected' ? 'Настроить' : 'Подключить'}
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+
+              <Card className="p-6 bg-card border-border">
+                <h3 className="text-lg font-semibold mb-6 text-foreground flex items-center gap-2">
+                  <Icon name="Settings" size={20} className="text-primary" />
+                  Общие настройки системы
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Часовой пояс</label>
+                    <Select defaultValue="msk">
+                      <SelectTrigger className="bg-muted/30 border-border">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="msk">Москва (UTC+3)</SelectItem>
+                        <SelectItem value="spb">Санкт-Петербург (UTC+3)</SelectItem>
+                        <SelectItem value="ekb">Екатеринбург (UTC+5)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Язык интерфейса</label>
+                    <Select defaultValue="ru">
+                      <SelectTrigger className="bg-muted/30 border-border">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ru">Русский</SelectItem>
+                        <SelectItem value="en">English</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Валюта по умолчанию</label>
+                    <Select defaultValue="rub">
+                      <SelectTrigger className="bg-muted/30 border-border">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="rub">₽ Рубль</SelectItem>
+                        <SelectItem value="usd">$ Доллар</SelectItem>
+                        <SelectItem value="eur">€ Евро</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Формат даты</label>
+                    <Select defaultValue="dd.mm.yyyy">
+                      <SelectTrigger className="bg-muted/30 border-border">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="dd.mm.yyyy">ДД.ММ.ГГГГ</SelectItem>
+                        <SelectItem value="mm/dd/yyyy">ММ/ДД/ГГГГ</SelectItem>
+                        <SelectItem value="yyyy-mm-dd">ГГГГ-ММ-ДД</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === 'customers' && (
             <div className="animate-fade-in">
               <Card className="p-12 bg-card border-border text-center">
                 <Icon name="Construction" size={64} className="mx-auto mb-4 text-muted-foreground" />
